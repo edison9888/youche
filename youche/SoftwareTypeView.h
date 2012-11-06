@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SoftwareCatalog.h"
+#import "EGORefreshTableHeaderView.h"
 
 @interface SoftwareTypeView : UIViewController<UITableViewDelegate,UITableViewDataSource,EGORefreshTableHeaderDelegate>
 {

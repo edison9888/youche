@@ -1,22 +1,23 @@
 //
-//  NewsMainViewController.h
-//  oschina
+//  RootViewController.h
+//  HorizontalMenu
 //
-//  Created by Coolin 006 on 12-11-5.
-//
+//  Created by Mugunth on 25/04/11.
+//  Copyright 2011 Steinlogic. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "MKHorizMenu.h"
+@interface NewsMainViewController : UIViewController <MKHorizMenuDataSource, MKHorizMenuDelegate> {
 
+    MKHorizMenu *_horizMenu;
+    NSMutableArray *_items;
+    
+    UILabel *_selectionItemLabel;
+}
 
-@interface NewsMainViewController : UIViewController <MKHorizMenuDataSource,
-MKHorizMenuDelegate>
-
-
-@property (strong, nonatomic) IBOutlet MKHorizMenu *topMenu;
+@property (nonatomic, retain) IBOutlet MKHorizMenu *horizMenu;
+@property (nonatomic, retain) NSMutableArray *items;
 @property (nonatomic, assign) IBOutlet UILabel *selectionItemLabel;
-@property (strong, nonatomic) NSMutableArray *arrMenuItems;
-
 
 @end

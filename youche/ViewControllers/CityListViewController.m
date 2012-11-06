@@ -179,7 +179,7 @@
 #pragma mark Custom Methods
 - (void)resetSearch {
 	
-	NSString *myFilePath = [[NSBundle mainBundle] pathForResource:@"flight_city" ofType:@"plist"];
+	NSString *myFilePath = [[NSBundle mainBundle] pathForResource:@"CityList" ofType:@"plist"];
 	NSDictionary *_dicRoot = [NSDictionary dictionaryWithContentsOfFile:myFilePath];
 	self.dicRoot = _dicRoot;
 	NSArray *allKey = [self.dicRoot allKeys];

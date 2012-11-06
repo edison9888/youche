@@ -22,6 +22,7 @@
 //add by liulei
 @synthesize cityListView;
 @synthesize newsMainView;
+//@synthesize rootView;
 
 #pragma mark 程序生命周期
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -50,10 +51,10 @@
     self.profileBase = [[ProfileBase alloc] initWithNibName:@"ProfileBase" bundle:nil];
     UINavigationController * profileNav = [[UINavigationController alloc] initWithRootViewController:profileBase];
     
-    //设置页 
-    self.settingView = [[SettingView alloc] initWithNibName:@"SettingView" bundle:nil];
-    UINavigationController * settingNav = [[UINavigationController alloc] initWithRootViewController:self.settingView];
-    settingNav.navigationBarHidden = NO;
+//    //设置页 
+//    self.settingView = [[SettingView alloc] initWithNibName:@"SettingView" bundle:nil];
+//    UINavigationController * settingNav = [[UINavigationController alloc] initWithRootViewController:self.settingView];
+//    settingNav.navigationBarHidden = NO;
     
 //    //新闻页
 //    self.newsBase = [[NewsBase alloc] initWithNibName:@"NewsBase" bundle:nil];
@@ -63,6 +64,11 @@
     self.newsMainView = [[NewsMainViewController alloc] initWithNibName:@"NewsMainViewController" bundle:nil];
     UINavigationController *newsViewNav = [[UINavigationController alloc] initWithRootViewController:self.newsMainView];
     
+    //设置页
+//    self.rootView = [[RootViewController alloc] initWithNibName:@"RootViewController" bundle:nil];
+//    UINavigationController * rootViewNav = [[UINavigationController alloc] initWithRootViewController:self.rootView];
+//    rootViewNav.navigationBarHidden = NO;
+    
     self.tabBarController = [[UITabBarController alloc] init];
     self.tabBarController.delegate = self;
     self.tabBarController.viewControllers = [NSArray arrayWithObjects:
@@ -70,8 +76,9 @@
                          postNav,
                          cityListNav,
                          profileNav,
-                         settingNav,
+                         //settingNav,
                          newsViewNav,
+                                           //  rootViewNav,
                          nil];
     //初始化
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

@@ -1,62 +1,44 @@
 //
-//  NewsMainViewController.m
-//  oschina
+//  RootViewController.m
+//  HorizontalMenu
 //
-//  Created by Coolin 006 on 12-11-5.
-//
+//  Created by Mugunth on 25/04/11.
+//  Copyright 2011 Steinlogic. All rights reserved.
 //
 
 #import "NewsMainViewController.h"
-#import "MKHorizMenu.h"
-
-@interface NewsMainViewController ()
-
-@end
 
 @implementation NewsMainViewController
 
-@synthesize topMenu = _topMenu;
-@synthesize arrMenuItems, selectionItemLabel;
+@synthesize horizMenu = _horizMenu;
+@synthesize items = _items;
+@synthesize selectionItemLabel = _selectionItemLabel;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-        self.title = @"新闻";
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
+    self.items = [NSArray arrayWithObjects:@"资讯", @"新闻", @"经验", @"保险", @"售后", @"保养", @"维修", nil];    
+    [self.horizMenu reloadData];
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    
-    //初始化菜单数据
-    self.arrMenuItems = [NSArray arrayWithObjects:@"资讯", @"新闻", @"事故", @"经验", @"博客", @"推荐", @"动态", nil];
-    
-    NSLog(@"xxx = %@", self.arrMenuItems);
-    [self.topMenu reloadData];
-    
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    [self.topMenu setSelectedIndex:3 animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
 {
+    // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
+    // Relinquish ownership any cached data, images, etc that aren't in use.
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+
+-(void) viewDidAppear:(BOOL)animated
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    [self.horizMenu setSelectedIndex:0 animated:YES];
+}
+
+- (void)dealloc
+{
+    [super dealloc];
 }
 
 #pragma mark -
@@ -73,19 +55,18 @@
 
 - (int) numberOfItemsForMenu:(MKHorizMenu *)tabView
 {
-    return [self.arrMenuItems count];
+    return [self.items count];
 }
 
 - (NSString*) horizMenu:(MKHorizMenu *)horizMenu titleForItemAtIndex:(NSUInteger)index
 {
-    return [self.arrMenuItems objectAtIndex:index];
+    return [self.items objectAtIndex:index];
 }
 
 #pragma mark -
 #pragma mark HorizMenu Delegate
 -(void) horizMenu:(MKHorizMenu *)horizMenu itemSelectedAtIndex:(NSUInteger)index
-{
-    self.selectionItemLabel.text = [self.arrMenuItems objectAtIndex:index];
+{        
+    self.selectionItemLabel.text = [self.items objectAtIndex:index];
 }
-
 @end

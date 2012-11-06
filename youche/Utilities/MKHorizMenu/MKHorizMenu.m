@@ -42,6 +42,7 @@
      
 -(void) reloadData
 {
+    
     self.itemCount = [dataSource numberOfItemsForMenu:self];
     self.backgroundColor = [dataSource backgroundColorForMenu:self];
     self.selectedImage = [dataSource selectedItemImageForMenu:self];
@@ -73,8 +74,8 @@
         xPos += buttonPadding;
         [self addSubview:customButton];        
     }
-    self.contentSize = CGSizeMake(xPos, 41);    
-    [self layoutSubviews];  
+    self.contentSize = CGSizeMake(xPos, 41);
+    [self layoutSubviews];
 }
 
 
@@ -103,14 +104,14 @@
 }
 
 
-//- (void)dealloc
-//{
-//    [_selectedImage release];
-//    _selectedImage = nil;
-//    [_titles release];
-//    _titles = nil;
-//    
-//    [super dealloc];
-//}
+- (void)dealloc
+{
+    [_selectedImage release];
+    _selectedImage = nil;
+    [_titles release];
+    _titles = nil;
+    
+    [super dealloc];
+}
 
 @end
