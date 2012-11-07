@@ -2431,15 +2431,14 @@
 		8FD3BAC61642CAB3008BCE7F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				8FFD7AF1164A9F840071BEE2 /* Models */,
+				8FFD7AEF164A9EAA0071BEE2 /* NewsViewControllers */,
 				A91BDBEE1647BFA0002FB6E3 /* CityListViewController.h */,
 				A91BDBEF1647BFA0002FB6E3 /* CityListViewController.m */,
 				A91BDBF01647BFA0002FB6E3 /* CityListViewController.xib */,
 				A91BDBF11647BFA0002FB6E3 /* CityList.plist */,
 				A91BDBF51647BFA0002FB6E3 /* NSDictionary-MutableDeepCopy.h */,
 				A91BDBF61647BFA0002FB6E3 /* NSDictionary-MutableDeepCopy.m */,
-				8F1E79BF164813AA008C45E9 /* NewsMainViewController.h */,
-				8F1E79C0164813AA008C45E9 /* NewsMainViewController.m */,
-				8F1E79C1164813AA008C45E9 /* NewsMainViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -3150,6 +3149,23 @@
 				A9BCE0A51647BE0D0096A2DA /* zz_rollline@2x.png */,
 			);
 			name = sources;
+			sourceTree = "<group>";
+		};
+		8FFD7AEF164A9EAA0071BEE2 /* NewsViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				8F1E79BF164813AA008C45E9 /* NewsMainViewController.h */,
+				8F1E79C0164813AA008C45E9 /* NewsMainViewController.m */,
+				8F1E79C1164813AA008C45E9 /* NewsMainViewController.xib */,
+			);
+			name = NewsViewControllers;
+			sourceTree = "<group>";
+		};
+		8FFD7AF1164A9F840071BEE2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		A91BDC671647C21E002FB6E3 /* EGOCache */ = {

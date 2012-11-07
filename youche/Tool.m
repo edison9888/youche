@@ -1151,6 +1151,9 @@ static char base64[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123
 }
 + (NSMutableArray *)readStrNewsArray:(NSString *)str andOld:(NSMutableArray *)olds
 {
+    
+    NSLog(@"news ceshi = %@", str);
+    
     TBXML *xml = [[TBXML alloc] initWithXMLString:str error:nil];
     TBXMLElement *root = xml.rootXMLElement;
     NSMutableArray *news = [[NSMutableArray alloc] initWithCapacity:20];

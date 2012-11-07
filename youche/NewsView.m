@@ -46,6 +46,7 @@
     [_refreshHeaderView egoRefreshScrollViewDidScroll:self.tableNews];
     [_refreshHeaderView egoRefreshScrollViewDidEndDragging:self.tableNews];
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
