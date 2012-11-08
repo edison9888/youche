@@ -12,14 +12,16 @@
 
 @synthesize horizMenu = _horizMenu;
 @synthesize items = _items;
-@synthesize selectionItemLabel = _selectionItemLabel;
 
 @synthesize tableNews;
 @synthesize catalog;
+@synthesize newsDetailView;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.title = @"优车文章";
     
     self.items = [NSArray arrayWithObjects:@"最新", @"动态", @"召回", @"经验", @"改装", @"保养", @"维修", nil];
     [self.horizMenu reloadData];
@@ -91,8 +93,7 @@
 //选择新闻分类
 -(void) horizMenu:(MKHorizMenu *)horizMenu itemSelectedAtIndex:(NSUInteger)index
 {        
-    self.selectionItemLabel.text = [self.items objectAtIndex:index];
-    self.catalog = index;
+    [self reloadType:index];
 }
 
 
@@ -143,23 +144,31 @@
         }
         
         int pageIndex = allCount/20;
-        
         NSString *url = @"";
+        int catid = 0;
+        NSString *strDataType = @"xml";
+        
+        
         switch (self.catalog) {
             case 0:
-                url = [NSString stringWithFormat:@"%@%@?catid=%d&pageIndex=%d&pageSize=%d", kServerRoot,kAPIGetArticlesList, 2, pageIndex, 20];
-                NSLog(@"url1 = %@", url);
+                catid = 2;
                 break;
             case 1:
-                url = [NSString stringWithFormat:@"%@?catalog=%d&pageIndex=%d&pageSize=%d", api_news_list, 1, pageIndex, 20];
+                catid = 4;
                 break;
             case 2:
-                url = [NSString stringWithFormat:@"%@?type=latest&pageIndex=%d&pageSize=%d", api_blog_list, pageIndex, 20];
+                catid = 2;
                 break;
             case 3:
-                url = [NSString stringWithFormat:@"%@?type=recommend&pageIndex=%d&pageSize=%d", api_blog_list, pageIndex, 20];
+                catid = 2;
                 break;
         }
+        
+        
+        
+        url = [NSString stringWithFormat:@"%@%@?datatype=%@&catid=%d&pageindex=%d&pagesize=%d", kServerRoot,kAPIGetArticlesList, strDataType, catid, pageIndex, 20];
+        NSLog(@"url1 = %@", url);
+        
         
         [[AFOSCClient sharedClient]getPath:url parameters:Nil
          
@@ -172,10 +181,9 @@
                                        }
                                        
                                        @try {
-                                           NSMutableArray *newNews = self.catalog <= 1 ?
-                                           
-                                           [Tool readStrNewsArray:operation.responseString andOld: news]:
-                                           [Tool readStrUserBlogsArray:operation.responseString andOld: news];
+                                           NSLog(@"文章列表 = %@", operation.responseString);
+                                           NSMutableArray *newNews = [Tools readStrNewsArray:operation.responseString andOld: news];
+                
                                            int count = [Tool isListOver2:operation.responseString];
                                            allCount += count;
                                            if (count < 20)
@@ -258,6 +266,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([news count] > 0) {
+        
+        NSLog(@"arr news = %@", news);
+        
         if ([indexPath row] < [news count])
         {
             NewsCell *cell = [tableView dequeueReusableCellWithIdentifier:NewsCellIdentifier];
@@ -271,18 +282,12 @@
                 }
             }
             cell.lblTitle.font = [UIFont boldSystemFontOfSize:15.0];
-            if (self.catalog <= 1) {
-                News *n = [news objectAtIndex:[indexPath row]];
-                cell.lblTitle.text = n.title;
-                cell.lblAuthor.text = [NSString stringWithFormat:@"%@ 发布于 %@ (%d评)", n.author, n.pubDate, n.commentCount];
-            }
-            else
-            {
-                BlogUnit *b = [news objectAtIndex:indexPath.row];
-                cell.lblTitle.text = b.title;
-                cell.lblAuthor.text = [NSString stringWithFormat:@"%@ %@ %@ (%d评)", b.authorName,b.documentType==1?@"原创":@"转载", b.pubDate, b.commentCount];
-            }
+            NewsModel *n = [news objectAtIndex:[indexPath row]];
+            NSString *date = [Tools getFormateDate:n.dateline];
+            cell.lblTitle.text = n.articleTitle;
+            cell.lblAuthor.text = [NSString stringWithFormat:@"%@ 发布于 %@ (%d评)", n.author, date, n.commentCount];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
             return cell;
         }
         else
@@ -309,30 +314,62 @@
         }
     }
     else {
-        NewsBase *parent = (NewsBase *)self.parentViewController;
-        self.parentViewController.title = [parent getSegmentTitle];
-        self.parentViewController.tabBarItem.title = @"综合";
-        if (self.catalog == 1) {
-            News *n = [news objectAtIndex:row];
-            if (n)
-            {
-                
-                if (n.url.length == 0) {
-                    [Tool pushNewsDetail:n andNavController:self.parentViewController.navigationController andIsNextPage:NO];
-                }
-                else
-                {
-                    [Tool analysis:n.url andNavController:parent.navigationController];
-                }
-            }
+        NSString *strArticleCat = @"";
+        switch (self.catalog) {
+            case 0:
+                strArticleCat = @"最新";
+                break;
+            case 1:
+                strArticleCat = @"动态";
+                break;
+            case 2:
+                strArticleCat = @"召回";
+                break;
+            case 3:
+                strArticleCat = @"经验";
+                break;
+            case 4:
+                strArticleCat = @"改装";
+                break;
+            case 5:
+                strArticleCat = @"最新";
+                break;
+            default:
+                break;
         }
-        else
-        {
-            BlogUnit *b = [news objectAtIndex:row];
-            if (b) {
-                [Tool analysis:b.url andNavController:parent.navigationController];
-            }
-        }
+        
+        
+        NewsModel *n = [news objectAtIndex:[indexPath row]];
+        NSString *strComments = [NSString stringWithFormat:@"%d评", n.commentCount];
+        
+        self.newsDetailView = [[NewsDetailViewController alloc] initWithNibName:@"NewsDetailViewController" bundle:nil];
+        self.newsDetailView.strLeftBar = strArticleCat;
+        self.newsDetailView.strComments= strComments;
+        [self.navigationController pushViewController:newsDetailView animated:YES];
+//        NewsBase *parent = (NewsBase *)self.parentViewController;
+//        self.parentViewController.title = [parent getSegmentTitle];
+//        self.parentViewController.tabBarItem.title = @"综合";
+//        if (self.catalog == 1) {
+//            News *n = [news objectAtIndex:row];
+//            if (n)
+//            {
+//                
+//                if (n.url.length == 0) {
+//                    [Tool pushNewsDetail:n andNavController:self.parentViewController.navigationController andIsNextPage:NO];
+//                }
+//                else
+//                {
+//                    [Tool analysis:n.url andNavController:parent.navigationController];
+//                }
+//            }
+//        }
+//        else
+//        {
+//            BlogUnit *b = [news objectAtIndex:row];
+//            if (b) {
+//                [Tool analysis:b.url andNavController:parent.navigationController];
+//            }
+//        }
     }
 }
 
