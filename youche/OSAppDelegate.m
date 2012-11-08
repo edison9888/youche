@@ -56,9 +56,9 @@
 //    UINavigationController * settingNav = [[UINavigationController alloc] initWithRootViewController:self.settingView];
 //    settingNav.navigationBarHidden = NO;
     
-//    //新闻页
-//    self.newsBase = [[NewsBase alloc] initWithNibName:@"NewsBase" bundle:nil];
-//    UINavigationController *newsNav = [[UINavigationController alloc] initWithRootViewController:self.newsBase];
+    //新闻页
+    self.newsBase = [[NewsBase alloc] initWithNibName:@"NewsBase" bundle:nil];
+    UINavigationController *newsNav = [[UINavigationController alloc] initWithRootViewController:self.newsBase];
     
     //wode xinwen zhuye
     self.newsMainView = [[NewsMainViewController alloc] initWithNibName:@"NewsMainViewController" bundle:nil];
@@ -72,8 +72,8 @@
     self.tabBarController = [[UITabBarController alloc] init];
     self.tabBarController.delegate = self;
     self.tabBarController.viewControllers = [NSArray arrayWithObjects:
-                       //  newsNav,
-                         postNav,
+                         newsNav,
+                         //postNav,
                          cityListNav,
                          profileNav,
                          //settingNav,

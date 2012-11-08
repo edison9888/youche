@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "MKHorizMenu.h"
 
+#import "NewsModel.h"
+#import "NewsDetailViewController.h"
 
 #import "News.h"
 #import "NewsDetail.h"
@@ -23,15 +25,12 @@
 #import "MBProgressHUD.h"
 
 
-
 @interface NewsMainViewController : UIViewController <MKHorizMenuDataSource, MKHorizMenuDelegate,UITableViewDelegate,UITableViewDataSource,EGORefreshTableHeaderDelegate,MBProgressHUDDelegate, UITabBarControllerDelegate,UIAlertViewDelegate>
 
 {
 
     MKHorizMenu *_horizMenu;
-    NSMutableArray *_items;
-    UILabel *_selectionItemLabel;
-    
+    NSMutableArray *_items;   
     
     
     NSMutableArray * news;
@@ -46,9 +45,9 @@
 
 @property (nonatomic, retain) IBOutlet MKHorizMenu *horizMenu;
 @property (nonatomic, retain) NSMutableArray *items;
-@property (nonatomic, assign) IBOutlet UILabel *selectionItemLabel;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableNews;
+@property (strong, nonatomic) NewsDetailViewController *newsDetailView;
 @property int catalog;
 - (void)reloadType:(int)ncatalog;
 - (void)reload:(BOOL)noRefresh;
