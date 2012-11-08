@@ -29,6 +29,27 @@
     if (self) {
         // Custom initialization
         self.title = @"选择城市";
+        
+        //返回按钮
+        UIImage *imgBack = [UIImage imageNamed:@"l_L_03.png"];
+        UIButton *btnBack = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btnBack setTitle:@"返回" forState:UIControlStateNormal];
+        [btnBack setBackgroundImage:imgBack forState:UIControlStateNormal];
+        [btnBack setFrame:CGRectMake(0.f, 0.f, imgBack.size.width, imgBack.size.height)];
+        [btnBack addTarget:self action:@selector(actionBack) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btnBack];
+        self.navigationItem.leftBarButtonItem = backButtonItem;
+        
+        //筛选按钮
+        UIImage *imgComments = [UIImage imageNamed:@"l_R_12.png"];
+        UIButton *btnComments = [UIButton buttonWithType:UIButtonTypeCustom];
+        btnComments.tag = kBtnToComments;
+        [btnComments setTitle:@"收藏" forState:UIControlStateNormal];
+        [btnComments setBackgroundImage:imgComments forState:UIControlStateNormal];
+        [btnComments setFrame:CGRectMake(0.f, 0.f, imgComments.size.width, imgComments.size.height)];
+        [btnComments addTarget:self action:@selector(actionSift) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *selectButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btnComments];
+        //self.navigationItem.rightBarButtonItem = selectButtonItem;
     }
     return self;
 }
@@ -46,8 +67,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark- Action methods
 
-- (void) back:(id) sender {
+- (void) actionBack{
 	[self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -117,8 +139,9 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
-
 
 //- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 //{

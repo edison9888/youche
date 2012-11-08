@@ -66,6 +66,12 @@
     if (self.strComments == nil || [self.strComments isEqualToString:@"0评"]) {
         self.navigationItem.rightBarButtonItem.enabled = NO;
     }
+    
+    // Listen for keyboard.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
 
 }
 
@@ -95,7 +101,7 @@
     if (btn.tag == kBtnToComments) {
         self.commentsView = [[CommentsViewController alloc] initWithNibName:@"CommentsViewController" bundle:nil];
         
-        [UIView animateWithDuration:0.9 animations:^{
+        [UIView animateWithDuration:0.7 animations:^{
             [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
             [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:self.view cache:NO];
             [self.view addSubview:self.commentsView.view];
@@ -114,7 +120,7 @@
         self.navigationItem.rightBarButtonItem = selectButtonItem;
     }else if (btn.tag == kBtnToArticle){
     
-        [UIView animateWithDuration:0.9 animations:^{
+        [UIView animateWithDuration:0.7 animations:^{
             [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
             [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.view cache:NO];
             [self.commentsView.view removeFromSuperview];
@@ -147,29 +153,67 @@
         [self.tfComments resignFirstResponder];
     }
     
-    
-    self.vComments.frame = CGRectMake(0.0, 480 - 44 -44 -20, 320.0, 44.0);
-    CGRect rect =  self.tfComments.frame;
-    self.tfComments.frame = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width - 30, rect.size.height);
-    
-    self.btnSendComments.hidden = YES;
-    self.btnShare.hidden = NO;
-    self.btnDigg.hidden = NO;
-    
     return YES;
 }
 
 //开始编辑文本
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    self.vComments.frame = CGRectMake(0.0, 100.0, 320.0, 44.0);
-    CGRect rect =  self.tfComments.frame;
-    self.tfComments.frame = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width+30, rect.size.height);
-   
+
+}
+
+#pragma mark Keyboard Notifications
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    
     self.btnSendComments.hidden = NO;
     self.btnShare.hidden = YES;
     self.btnDigg.hidden = YES;
+    
+    CGRect rect =  self.tfComments.frame;
+    self.tfComments.frame = CGRectMake(rect.origin.x, rect.origin.y, 200.0, rect.size.height);
+    
+    
+    [self resizeViewWithOptions:[notification userInfo]];
 }
 
+- (void)keyboardWillHide:(NSNotification *)notification {
+    
+    self.btnSendComments.hidden = YES;
+    self.btnShare.hidden = NO;
+    self.btnDigg.hidden = NO;
+    
+    CGRect rect =  self.tfComments.frame;
+    self.tfComments.frame = CGRectMake(rect.origin.x, rect.origin.y, 170.0, rect.size.height);
+    
+    
+    [self resizeViewWithOptions:[notification userInfo]];
+}
+
+- (void)resizeViewWithOptions:(NSDictionary *)options {
+    
+    NSTimeInterval animationDuration;
+    UIViewAnimationCurve animationCurve;
+    
+    CGRect keyboardEndFrame;
+    [[options objectForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&animationCurve];
+    [[options objectForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
+    [[options objectForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardEndFrame];
+    
+    
+    CGRect keyboardFrameEndRelative = [self.view convertRect:keyboardEndFrame fromView:nil];
+    //NSLog(@"keyboardFrameEndRelative: %@", NSStringFromCGRect(keyboardFrameEndRelative));
+    CGFloat keyBoardHeight =  keyboardFrameEndRelative.origin.y;
+    //NSLog(@"keyBoardHeight: %f", keyBoardHeight);
+    
+    
+    [UIView animateWithDuration:animationDuration animations:^{
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        [UIView setAnimationTransition:UIViewAnimationOptionTransitionNone forView:self.view cache:NO];
+        self.vComments.frame = CGRectMake(0.0, keyBoardHeight - 44, 320.0, 44.0);
+        [UIView commitAnimations];
+    }];
+    
+}
 
 @end

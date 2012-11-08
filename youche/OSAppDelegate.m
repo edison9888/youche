@@ -20,9 +20,8 @@
 @synthesize profileBase;
 
 //add by liulei
-@synthesize cityListView;
 @synthesize newsMainView;
-//@synthesize rootView;
+@synthesize fourMainView;
 
 #pragma mark 程序生命周期
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -39,22 +38,20 @@
 //    //动弹页 
 //    self.tweetBase = [[TweetBase2 alloc] initWithNibName:@"TweetBase2" bundle:nil];
 //    UINavigationController * tweetNav = [[UINavigationController alloc] initWithRootViewController:self.tweetBase];
-    
-    self.cityListView = [[CityListViewController alloc] initWithNibName:@"CityListViewController" bundle:nil];
-    UINavigationController *cityListNav = [[UINavigationController alloc] initWithRootViewController:self.cityListView];
+
     
     //问答页
     self.postBase = [[PostBase alloc] initWithNibName:@"PostBase" bundle:nil];
     UINavigationController * postNav = [[UINavigationController alloc] initWithRootViewController:self.postBase];
     
-    //动态页;
-    self.profileBase = [[ProfileBase alloc] initWithNibName:@"ProfileBase" bundle:nil];
-    UINavigationController * profileNav = [[UINavigationController alloc] initWithRootViewController:profileBase];
+//    //动态页;
+//    self.profileBase = [[ProfileBase alloc] initWithNibName:@"ProfileBase" bundle:nil];
+//    UINavigationController * profileNav = [[UINavigationController alloc] initWithRootViewController:profileBase];
     
 //    //设置页 
-//    self.settingView = [[SettingView alloc] initWithNibName:@"SettingView" bundle:nil];
-//    UINavigationController * settingNav = [[UINavigationController alloc] initWithRootViewController:self.settingView];
-//    settingNav.navigationBarHidden = NO;
+    self.settingView = [[SettingView alloc] initWithNibName:@"SettingView" bundle:nil];
+    UINavigationController * settingNav = [[UINavigationController alloc] initWithRootViewController:self.settingView];
+    settingNav.navigationBarHidden = NO;
     
     //新闻页
     self.newsBase = [[NewsBase alloc] initWithNibName:@"NewsBase" bundle:nil];
@@ -63,6 +60,10 @@
     //wode xinwen zhuye
     self.newsMainView = [[NewsMainViewController alloc] initWithNibName:@"NewsMainViewController" bundle:nil];
     UINavigationController *newsViewNav = [[UINavigationController alloc] initWithRootViewController:self.newsMainView];
+    
+    //wode 4s zhuye
+    self.fourMainView = [[FourMainViewController alloc] initWithNibName:@"FourMainViewController" bundle:nil];
+    UINavigationController *fourViewNav = [[UINavigationController alloc] initWithRootViewController:self.fourMainView];
     
     //设置页
 //    self.rootView = [[RootViewController alloc] initWithNibName:@"RootViewController" bundle:nil];
@@ -73,11 +74,12 @@
     self.tabBarController.delegate = self;
     self.tabBarController.viewControllers = [NSArray arrayWithObjects:
                          newsNav,
-                         //postNav,
-                         cityListNav,
-                         profileNav,
-                         //settingNav,
+                         postNav,
                          newsViewNav,
+                         fourViewNav,
+                         //profileNav,
+                         settingNav,
+                         
                                            //  rootViewNav,
                          nil];
     //初始化

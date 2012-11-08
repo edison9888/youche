@@ -19,7 +19,8 @@
 
 //add by liulei
 #import "NewsMainViewController.h"
-#import "CityListViewController.h"
+#import "FourMainViewController.h"
+
 
 @class ProfileBase;
 @interface OSAppDelegate : UIResponder <UIApplicationDelegate,UITabBarControllerDelegate>
@@ -36,7 +37,7 @@
 @property (strong, nonatomic) ProfileBase * profileBase;
 @property (strong, nonatomic) SettingView * settingView;
 
-@property (strong, nonatomic) CityListViewController *cityListView;
 @property (strong, nonatomic) NewsMainViewController *newsMainView;
+@property (strong, nonatomic) FourMainViewController *fourMainView;
 
 @end
