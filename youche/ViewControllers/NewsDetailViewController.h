@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "CommentsViewController.h"
 
+#import "NewsContent.h"
+
+//限定大图片尺寸
+#define BIG_IMG_WIDTH 264
+#define BIG_IMG_HEIGHT 300
 
 enum{
     kBtnToComments = 10000,
@@ -30,7 +35,11 @@ enum{
 @property (strong, nonatomic) IBOutlet UIButton *btnDigg;
 @property (strong, nonatomic) IBOutlet UIButton *btnSendComments;
 
+@property int articleid;
 @property (strong, nonatomic) CommentsViewController *commentsView;
 
+@property (strong, nonatomic) NewsContent *newsContent;
+
+- (void)reloadData:(NewsContent *)news;
 
 @end

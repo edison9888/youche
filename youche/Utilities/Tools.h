@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "NewsModel.h"
+#import "NewsContent.h"
 
 @interface Tools : NSObject
 
@@ -19,6 +20,12 @@
 + (NSString *)getFormateDate:(int)dateline;
 
 /**
+ * 替换html内容
+ * @param
+ */
++ (NSString *)replaceHtmoldStr:(NSString*)oldStr byNewStr:(NSString *)newStr intoContent:(NSString*)content;
+
+/**
  * 重复判断方法
  */
 
@@ -27,6 +34,7 @@
 
 //解析文章
 + (NSMutableArray *)readStrNewsArray:(NSString *)str andOld:(NSMutableArray *)olds;
-
+//解析文章内容
++ (NewsContent *)readStrNewsContent:(NSString *)str;
 
 @end

@@ -11,8 +11,9 @@
 
 
 /*Server root*/
-//#define kServerRoot             @"http://192.168.0.107/md/server/"
-#define kServerRoot             @"http://localhost/dp/server/"
+#define kServerIP               @"http://192.168.0.107"
+#define kServerRoot             @"http://192.168.0.107/md/server/"
+//#define kServerRoot             @"http://localhost/dp/server/"
 
 
 /**

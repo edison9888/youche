@@ -44,6 +44,9 @@
     self.tableNews.backgroundColor = [Tool getBackgroundColor];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshed:) name:Notification_TabClick object:nil];
+    
+    
+    [self.horizMenu setSelectedIndex:0 animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,7 +60,7 @@
 
 -(void) viewDidAppear:(BOOL)animated
 {
-    [self.horizMenu setSelectedIndex:0 animated:YES];
+
 }
 
 - (void)dealloc
@@ -167,7 +170,7 @@
         
         
         url = [NSString stringWithFormat:@"%@%@?datatype=%@&catid=%d&pageindex=%d&pagesize=%d", kServerRoot,kAPIGetArticlesList, strDataType, catid, pageIndex, 20];
-        NSLog(@"url1 = %@", url);
+        NSLog(@"ArticlesList = %@", url);
         
         
         [[AFOSCClient sharedClient]getPath:url parameters:Nil
@@ -341,11 +344,16 @@
         
         NewsModel *n = [news objectAtIndex:[indexPath row]];
         NSString *strComments = [NSString stringWithFormat:@"%d评", n.commentCount];
+        int newsid = n.articleid;
+        
         
         self.newsDetailView = [[NewsDetailViewController alloc] initWithNibName:@"NewsDetailViewController" bundle:nil];
         self.newsDetailView.strLeftBar = strArticleCat;
         self.newsDetailView.strComments= strComments;
+        self.newsDetailView.articleid = newsid;
         [self.navigationController pushViewController:newsDetailView animated:YES];
+        
+        
 //        NewsBase *parent = (NewsBase *)self.parentViewController;
 //        self.parentViewController.title = [parent getSegmentTitle];
 //        self.parentViewController.tabBarItem.title = @"综合";

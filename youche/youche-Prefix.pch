@@ -15,6 +15,7 @@
     #import <QuartzCore/QuartzCore.h>
 
 #import "HttpUrlConsts.h" //apiURL常量
+#import "Consts.h"        //常用宏常量  
 #import "Tools.h"
 
 //添加的预编译

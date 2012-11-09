@@ -24,6 +24,14 @@
     return [dateFormater stringFromDate:date];
 }
 
+/**
+ * 替换html内容
+ * @param 
+ */
++ (NSString *)replaceHtmoldStr:(NSString*)oldStr byNewStr:(NSString *)newStr intoContent:(NSString*)content{
+    return [content stringByReplacingOccurrencesOfString:oldStr withString:newStr];
+}
+
 //判断新闻是否重复
 + (BOOL)isRepeatNews:(NSMutableArray *)all andNews:(NewsModel *)n
 {
@@ -38,7 +46,7 @@
     return NO;
 }
 
-//解析文章
+//解析文章列表
 + (NSMutableArray *)readStrNewsArray:(NSString *)str andOld:(NSMutableArray *)olds
 {
     
@@ -134,6 +142,29 @@
         }
     }
     return news;
+}
+
+
+//解析文章内容
++ (NewsContent *)readStrNewsContent:(NSString *)str
+{
+    TBXML *xml = [[TBXML alloc] initWithXMLString:str error:nil];
+    TBXMLElement *root = xml.rootXMLElement;
+    TBXMLElement *article = [TBXML childElementNamed:@"article" parentElement:root];
+    if (article == nil) {
+        return nil;
+    }
+    
+    TBXMLElement *articleid = [TBXML childElementNamed:@"articleid" parentElement:article];
+    TBXMLElement *content = [TBXML childElementNamed:@"content" parentElement:article];
+    
+    int newid = [[TBXML textForElement:articleid] intValue];
+    NSString *strContent = [TBXML textForElement:content];
+    
+    NewsContent *newsContent = [[NewsContent alloc] initWithParameters:newid
+                                                               content:strContent];
+    
+    return newsContent;
 }
 
 @end
