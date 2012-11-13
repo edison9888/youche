@@ -17,6 +17,8 @@
 #import "HttpUrlConsts.h" //apiURL常量
 #import "Consts.h"        //常用宏常量  
 #import "Tools.h"
+#import "LoggerClient.h"    //NSLogger
+#import "LoggerCustom.h"    //NSLogger
 
 //添加的预编译
 #import "ASIHTTPRequest.h"

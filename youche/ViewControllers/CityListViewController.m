@@ -32,24 +32,31 @@
         
         //返回按钮
         UIImage *imgBack = [UIImage imageNamed:@"l_L_03.png"];
-        UIButton *btnBack = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+
+        
+        //UIButton *btnBack = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIButton *btnBack = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         [btnBack setTitle:@"返回" forState:UIControlStateNormal];
-        [btnBack setBackgroundImage:imgBack forState:UIControlStateNormal];
+        //[btnBack setBackgroundImage:imgBack forState:UIControlStateNormal];
         [btnBack setFrame:CGRectMake(0.f, 0.f, imgBack.size.width, imgBack.size.height)];
         [btnBack addTarget:self action:@selector(actionBack) forControlEvents:UIControlEventTouchUpInside];
         UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btnBack];
-        self.navigationItem.leftBarButtonItem = backButtonItem;
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(actionBack)];
+        //backButtonItem;
         
         //筛选按钮
         UIImage *imgComments = [UIImage imageNamed:@"l_R_12.png"];
-        UIButton *btnComments = [UIButton buttonWithType:UIButtonTypeCustom];
+        //UIButton *btnComments = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIButton *btnComments = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         btnComments.tag = kBtnToComments;
-        [btnComments setTitle:@"收藏" forState:UIControlStateNormal];
-        [btnComments setBackgroundImage:imgComments forState:UIControlStateNormal];
+        [btnComments setTitle:@"品牌" forState:UIControlStateNormal];
+        //[btnComments setBackgroundImage:imgComments forState:UIControlStateNormal];
         [btnComments setFrame:CGRectMake(0.f, 0.f, imgComments.size.width, imgComments.size.height)];
         [btnComments addTarget:self action:@selector(actionSift) forControlEvents:UIControlEventTouchUpInside];
         UIBarButtonItem *selectButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btnComments];
-        //self.navigationItem.rightBarButtonItem = selectButtonItem;
+        //self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"品牌" style:UIBarButtonItemStyleBordered target:self action:@selector(actionSift)];
+        //selectButtonItem;
     }
     return self;
 }
@@ -59,6 +66,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self resetSearch];
+    
+    
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -70,6 +80,15 @@
 #pragma mark- Action methods
 
 - (void) actionBack{
+    //返回按钮
+    UIImage *imgBack = [UIImage imageNamed:@"l_L_03.png"];
+    
+    LogImageData(@"image", 1, imgBack.size.width, imgBack.size.height, UIImagePNGRepresentation(imgBack));
+    
+    UIImage *imgBack2 = [UIImage imageNamed:@"l_L_09.png"];
+    
+    LogImage(@"image2", 2, imgBack2);
+    
 	[self.navigationController popViewControllerAnimated:YES];
 }
 

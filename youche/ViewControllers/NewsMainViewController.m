@@ -24,6 +24,8 @@
     self.title = @"优车文章";
     
     self.items = [NSArray arrayWithObjects:@"最新", @"动态", @"召回", @"经验", @"改装", @"保养", @"维修", nil];
+    LogMessage(@"arr", 1, @"%@", self.items);
+
     [self.horizMenu reloadData];
     
     //初始化，默认新闻分类为0，条数为0

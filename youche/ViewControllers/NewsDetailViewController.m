@@ -53,7 +53,8 @@
     [btnBack setFrame:CGRectMake(0.f, 0.f, imgBack.size.width, imgBack.size.height)];
     [btnBack addTarget:self action:@selector(actionBack) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btnBack];
-    self.navigationItem.leftBarButtonItem = backButtonItem;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(actionBack)];
+    //backButtonItem;
     
     //评论按钮
     UIImage *imgComments = [UIImage imageNamed:@"l_R_12.png"];
@@ -64,7 +65,9 @@
     [btnComments setFrame:CGRectMake(0.f, 0.f, imgComments.size.width, imgComments.size.height)];
     [btnComments addTarget:self action:@selector(actionComment:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *selectButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btnComments];
-    self.navigationItem.rightBarButtonItem = selectButtonItem;
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:self.strComments style:UIBarButtonItemStyleBordered target:self action:@selector(actionComment:)];
+    //selectButtonItem;
     
     if (self.strComments == nil || [self.strComments isEqualToString:@"0评"]) {
         self.navigationItem.rightBarButtonItem.enabled = NO;
